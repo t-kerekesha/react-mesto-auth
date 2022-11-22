@@ -1,0 +1,5 @@
+.form__item {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 var(--row-gap);
+}

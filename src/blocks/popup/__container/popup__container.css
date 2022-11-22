@@ -1,0 +1,4 @@
+.popup__container {
+  grid-area: container;
+  box-sizing: border-box;
+}

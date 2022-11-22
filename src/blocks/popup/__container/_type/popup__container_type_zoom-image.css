@@ -1,0 +1,7 @@
+.popup__container_type_zoom-image {
+  margin: 0;
+  max-width: 75vw;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
