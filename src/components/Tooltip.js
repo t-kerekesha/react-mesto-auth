@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef, memo } from 'react';
 
-function Tooltip(props) {
+function Tooltip({ isOpen, likes, position: cursorPosition }) {
   const [position, setPosition] = useState({
     top: 0,
     left: 0,
@@ -11,12 +11,12 @@ function Tooltip(props) {
 
   useEffect(() => {
     setPosition({
-      top: props.position.top,
-      left: props.position.left,
+      top: cursorPosition.top,
+      left: cursorPosition.left,
       right: 'auto'
     });
     setCoordinates(tooltip.current.getBoundingClientRect());
-  }, [props.isOpen]);
+  }, [isOpen]);
 
   useEffect(() => {
     const coords = tooltip.current.getBoundingClientRect();
@@ -30,14 +30,14 @@ function Tooltip(props) {
   }, [coordinates]);
 
   return (
-    <div className={`tooltip-likes ${props.isOpen && 'popup_opened'}`}
+    <div className={`tooltip-likes ${isOpen && 'popup_opened'}`}
       ref={tooltip}
       style={{
             top: position.top,
             left: position.left,
             right: position.right
           }}>
-      {props.likes.map((like, i) => (
+      {likes.map((like, i) => (
         <img key={like._id}
           src={like.avatar}
           className="tooltip-likes__avatar" />

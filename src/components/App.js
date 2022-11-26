@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
@@ -23,7 +23,6 @@ import { validationParams } from '../utils/constants';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAuthSuccessful, setAuthSuccessful] = useState(false);
-  const [message, setMessage] = useState('');
   const [user, setUser] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -50,9 +49,7 @@ function App() {
       .catch((error) => {
         setInfoTooltipOpen(true);
         setAuthSuccessful(false);
-        setMessage(error);
         console.log(error);
-        console.log(message);
       })
       .finally(() => setLoading(false));
   });
@@ -62,7 +59,6 @@ function App() {
     setLoading(true);
     auth.authorize(userData.email, userData.password)
       .then((data) => {
-        // console.log(data)
         if(data.token) {
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
@@ -71,9 +67,7 @@ function App() {
       .catch((error) => {
         setInfoTooltipOpen(true);
         setAuthSuccessful(false);
-        setMessage(error);
         // console.log(error);
-        // console.log(message);
       })
       .finally(() => setLoading(false));
   });
@@ -134,10 +128,15 @@ function App() {
   }, [loggedIn]);
 
   // включение валидации форм
-  useEffect(() => {
-    enableValidation(validationParams);
-    console.log(formValidators)
-  }, []);
+  // useEffect(() => {
+  //   enableValidation(validationParams);
+  //   console.log("formValidators", formValidators)
+  // }, []);
+
+  // const validators = useMemo(() => {
+  //   enableValidation(validationParams)
+  // }, [validationParams])
+  // console.log("validators", validators);
 
   // обновление данных пользователя
   function handleUpdateUser({ name, about }) {

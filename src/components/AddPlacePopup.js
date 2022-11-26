@@ -44,12 +44,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onResetValidators, onLoadi
         onResetForm={resetForm}
       >
         <div className="form__item">
-          <input id="title-input"
+          <input
+            id="title-input"
             type="text"
             value={cardData?.name}
             onChange={handleChange}
             name="name"
-            className="form__input"
+            className="form__input input"
             placeholder="Название"
             minLength="2"
             maxLength="30"
@@ -57,12 +58,13 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, onResetValidators, onLoadi
           <span className="title-input-error form__input-error"></span>
         </div>
         <div className="form__item">
-          <input id="link-input"
+          <input
+            id="link-input"
             type="url"
             value={cardData?.link}
             onChange={handleChange}
             name="link"
-            className="form__input"
+            className="form__input input"
             placeholder="Ссылка на картинку"
             required/>
           <span className="link-input-error form__input-error"></span>

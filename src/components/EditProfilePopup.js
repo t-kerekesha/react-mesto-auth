@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
-function EditProfilePopup(props) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, onResetValidators, onLoading}) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const currentUser = useContext(CurrentUserContext);
@@ -10,7 +10,7 @@ function EditProfilePopup(props) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser, props.isOpen]);
+  }, [currentUser, isOpen]);
 
   function handleChangeName(event) {
     setName(event.target.value);
@@ -22,7 +22,7 @@ function EditProfilePopup(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    props.onUpdateUser({
+    onUpdateUser({
       name,
       about: description,
     });
@@ -33,11 +33,11 @@ function EditProfilePopup(props) {
         title="Редактировать профиль"
         name="edit-profile"
         classContainer="popup__container_type_two-input"
-        buttonText={props.onLoading ? "Сохранение..." : "Сохранить"}
-        isOpen={props.isOpen}
-        onClose={props.onClose}
+        buttonText={onLoading ? "Сохранение..." : "Сохранить"}
+        isOpen={isOpen}
+        onClose={onClose}
         onSubmit={handleSubmit}
-        onResetValidators={props.onResetValidators}
+        onResetValidators={onResetValidators}
       >
         <div className="form__item">
           <input id="name-input"
@@ -45,7 +45,7 @@ function EditProfilePopup(props) {
             value={name || ""}
             onChange={handleChangeName}
             name="name"
-            className="form__input"
+            className="form__input input"
             placeholder="Имя"
             minLength="2"
             maxLength="40"
@@ -58,7 +58,7 @@ function EditProfilePopup(props) {
             value={description || ""}
             onChange={handleChangeDescription}
             name="about"
-            className="form__input"
+            className="form__input input"
             placeholder="О себе"
             minLength="2"
             maxLength="200"

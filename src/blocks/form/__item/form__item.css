@@ -1,4 +1,5 @@
 .form__item {
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin: 0 0 var(--row-gap);

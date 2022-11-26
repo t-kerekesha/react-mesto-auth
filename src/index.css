@@ -86,5 +86,8 @@
 @import url('./blocks/sign/__signup/sign__signup.css');
 /* not-found */
 @import url('./blocks/not-found/not-found.css');
+@import url('./blocks/not-found/__title/not-found__title.css');
+@import url('./blocks/not-found/__text/not-found__text.css');
+@import url('./blocks/not-found/__link/not-found__link.css');
 /* spinner */
 @import url('./blocks/spinner/spinner.css');

@@ -19,6 +19,11 @@
   opacity: .85;
 }
 
+.sign__button:disabled {
+  opacity: .2;
+  cursor: auto;
+}
+
 @media (max-width: 800px) {
   .sign__button {
     min-height: 46px;

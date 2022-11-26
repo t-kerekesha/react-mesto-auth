@@ -1,80 +1,70 @@
 import React, { useRef, useEffect } from 'react';
 import Popup from './Popup';
+import { validationParams } from '../utils/constants';
+import { validation } from '../utils/FormValidator';
 
-function PopupWithForm(props) {
+function PopupWithForm({
+  title,
+  name,
+  classContainer,
+  buttonText,
+  isOpen,
+  onClose,
+  onSubmit,
+  onResetValidators,
+  onResetForm,
+  children
+}) {
   const formRef = useRef();
+  let validator;
 
   useEffect(() => {
-    document.addEventListener('keydown', handleEscClose);
-    return () => {
-      document.removeEventListener('keydown', handleEscClose);
-    }
+    validator = validation(validationParams, formRef.current);
+    validator.enableValidation();
   }, []);
 
   useEffect(() => {
-    if(props.isOpen) {
+    if (isOpen) {
       setTimeout(() => {
         formRef.current.elements[0].focus();
       }, 200);
     }
-    if(props.onResetValidators) {
-      props.onResetValidators(props.name);
+    if (onResetValidators) {
+      onResetValidators(name);
     }
-  }, [props.isOpen]);
-
-  function handleEscClose(event) {
-    if (event.key === 'Escape') {
-      props.onClose();
-      formRef.current.reset();
-    }
-  }
-
-  function close(event) {
-    if (event.target.classList.contains('popup_opened') ||
-        event.target.classList.contains('popup__close-button')) {
-        props.onClose();
-        formRef.current.reset();
-      }
-  }
+    formRef.current.reset();
+    // validator.resetValidation();
+  }, [isOpen]);
 
   function handleSubmit(event) {
-    props.onSubmit(event);
+    onSubmit(event);
     formRef.current.reset();
   }
 
   function handleReset() {
-    if (props.onResetForm) {
-      props.onResetForm();
+    if (onResetForm) {
+      onResetForm();
     }
   }
 
   return (
-    <div className={`popup popup_type_form popup_type_${props.name} ${props.isOpen && 'popup_opened'}`}
-      role="dialog"
-      aria-modal="true"
-      tabIndex="-1"
-      onMouseDown={close}>
-      <button className="popup__close-button button"
-        type="button"
-        aria-label="Закрыть"
-        onMouseDown={close}>
-      </button>
-      <form className={`popup__container ${props.classContainer} form`}
+    <Popup isOpen={isOpen} onClose={onClose} popupClass="popup_type_form">
+      <form className={`popup__container ${classContainer} form`}
         onSubmit={handleSubmit}
         onReset={handleReset}
-        name={props.name}
+        name={name}
         ref={formRef}
         noValidate>
         <h2 className="form__title">
-          {props.title}
+          {title}
         </h2>
-        {props.children}
+        {children}
         <button className="form__save-button submit"
           type="submit">
-            {props.buttonText}
+          {buttonText}
         </button>
       </form>
-    </div>
+    </Popup>
   );
 }
 
