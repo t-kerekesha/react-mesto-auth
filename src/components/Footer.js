@@ -1,5 +1,5 @@
 function Footer() {
-  return(
+  return (
     <footer>
       <p className="footer" lang="en">&copy; 2022 Mesto Russia</p>
     </footer>

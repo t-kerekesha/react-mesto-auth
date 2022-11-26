@@ -1,11 +1,15 @@
-import React from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import Tooltip from "./Tooltip";
+import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Tooltip from './Tooltip';
 
 class Card extends React.Component {
   static contextType = CurrentUserContext;
   constructor(props) {
     super(props);
+    this.card = this.props.card;
+    this.onCardLike = this.props.onCardLike;
+    this.onCardDelete = this.props.onCardDelete;
+    this.onCardClick = this.props.onCardClick;
     this.handleCardClick = this.handleCardClick.bind(this);
     this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -20,15 +24,15 @@ class Card extends React.Component {
   }
 
   handleCardClick() {
-    this.props.onCardClick(this.props.card);
+    this.props.onCardClick(this.card);
   }
 
   handleLikeClick() {
-    this.props.onCardLike(this.props.card);
+    this.props.onCardLike(this.card);
   }
 
   handleDeleteClick() {
-    this.props.onCardDelete(this.props.card);
+    this.props.onCardDelete(this.card);
   }
 
   openTooltip({ likes, top, left }) {

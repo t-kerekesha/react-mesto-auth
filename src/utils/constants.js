@@ -4,7 +4,7 @@ export const validationParams = {
   inputSelector: '.form__input',
   inputErrorClass: 'form__input_invalid',
   errorClass: 'form__input-error_visible',
-  submitButtonSelector: '.form__save-button'
+  submitButtonSelector: '.submit'
 };
 
 export const formValidators = {};

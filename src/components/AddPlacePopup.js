@@ -1,33 +1,34 @@
-import { useState, useEffect } from "react";
-import PopupWithForm from "./PopupWithForm";
+import { useState, useEffect } from 'react';
+import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup(props) {
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
+function AddPlacePopup({ isOpen, onClose, onAddPlace, onResetValidators, onLoading }) {
+  const [cardData, setCardData] = useState({
+    name: '',
+    link: ''
+  });
 
   useEffect(() => {
     resetForm();
-  }, [props.isOpen])
+  }, [isOpen])
 
   function handleSubmit(event) {
     event.preventDefault();
-    props.onAddPlace({
-      name,
-      link,
+    onAddPlace(cardData);
+  }
+
+  function handleChange(event) {
+    const {name, value} = event.target;
+    setCardData({
+      ...cardData,
+      [name]: value
     });
   }
 
-  function handleChangeName(event) {
-    setName(event.target.value);
-  }
-
-  function handleChangeLink(event) {
-    setLink(event.target.value);
-  }
-
   function resetForm() {
-    setName('');
-    setLink('');
+    setCardData({
+      name: '',
+      link: ''
+    });
   }
 
   return (
@@ -35,19 +36,19 @@ function AddPlacePopup(props) {
         title="Новое место"
         name="add-image"
         classContainer="popup__container_type_two-input"
-        buttonText={props.onLoading ? "Сохранение..." : "Создать"}
-        isOpen={props.isOpen}
-        onClose={props.onClose}
+        buttonText={onLoading ? "Сохранение..." : "Создать"}
+        isOpen={isOpen}
+        onClose={onClose}
         onSubmit={handleSubmit}
-        onResetValidators={props.onResetValidators}
+        onResetValidators={onResetValidators}
         onResetForm={resetForm}
       >
         <div className="form__item">
           <input id="title-input"
             type="text"
-            value={name || ""}
-            onChange={handleChangeName}
-            name="title"
+            value={cardData?.name}
+            onChange={handleChange}
+            name="name"
             className="form__input"
             placeholder="Название"
             minLength="2"
@@ -58,8 +59,8 @@ function AddPlacePopup(props) {
         <div className="form__item">
           <input id="link-input"
             type="url"
-            value={link || ""}
-            onChange={handleChangeLink}
+            value={cardData?.link}
+            onChange={handleChange}
             name="link"
             className="form__input"
             placeholder="Ссылка на картинку"

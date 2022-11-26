@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
+import Popup from './Popup';
 
 function PopupWithForm(props) {
   const formRef = useRef();
@@ -47,7 +48,7 @@ function PopupWithForm(props) {
     }
   }
 
-  return(
+  return (
     <div className={`popup popup_type_form popup_type_${props.name} ${props.isOpen && 'popup_opened'}`}
       role="dialog"
       aria-modal="true"
@@ -68,8 +69,8 @@ function PopupWithForm(props) {
           {props.title}
         </h2>
         {props.children}
-        <button type="submit"
-          className="form__save-button">
+        <button className="form__save-button submit"
+          type="submit">
             {props.buttonText}
         </button>
       </form>

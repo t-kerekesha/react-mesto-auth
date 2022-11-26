@@ -25,8 +25,10 @@ class FormValidator {
 
   // проверка валидности ввода
   _checkValidity(input) {
+    console.log("11")
     if (!this._isInputValid(input)) {
      this._showInputError(input, input.validationMessage);
+     console.log("22")
     } else {
      this._hideInputError(input);
     }
@@ -54,7 +56,10 @@ class FormValidator {
   enableValidation() {
     this._setButtonState(!this._isFormValid());  // изменение состояния кнопки
 
+    console.log('3', this._form)
+    console.log('4', this._inputList)
     this._form.addEventListener('input', (event) => {
+      console.log('event', event)
       this._inputList.forEach((input) => {
         this._checkValidity(event.target);
         this._setButtonState(!this._isFormValid());

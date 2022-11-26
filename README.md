@@ -28,4 +28,4 @@
 
 **Ссылка на проект**
 ------
-* [Ссылка на проект](https://t-kerekesha.github.io/mesto-react/)
+* [Ссылка на проект](https://t-kerekesha.github.io/react-mesto-auth/)

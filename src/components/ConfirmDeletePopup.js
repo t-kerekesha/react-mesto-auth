@@ -1,9 +1,9 @@
-import PopupWithForm from "./PopupWithForm";
+import PopupWithForm from './PopupWithForm';
 
-function ConfirmDeletePopup(props) {
+function ConfirmDeletePopup({ card, onClose, onConfirmDelete }) {
   function handleSubmit(event) {
     event.preventDefault();
-    props.onConfirmDelete(props.card);
+    onConfirmDelete(card);
   }
 
   return (
@@ -12,8 +12,8 @@ function ConfirmDeletePopup(props) {
         name="confirm-delete"
         classContainer="popup__container_type_confirmation"
         buttonText="Да"
-        isOpen={props.card != null ? true : false}
-        onClose={props.onClose}
+        isOpen={card != null ? true : false}
+        onClose={onClose}
         onSubmit={handleSubmit} />
   );
 }
