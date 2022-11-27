@@ -37,12 +37,10 @@ export function checkToken(token) {
 }
 
 function checkResponse(response) {
-  // console.log(response)
+  console.log(response)
   if(response.ok) {
     return response.json();
   } else {
-    console.log(response.json)
-    console.log(response.json().error)
-    return Promise.reject({ message: `Ошибка: ${response.statusText}` });
+    return response.json().then((error) => Promise.reject(error));
   }
 }

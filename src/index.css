@@ -68,6 +68,7 @@
 @import url('./blocks/popup/__message/popup__message.css');
 @import url('./blocks/popup/__icon-info/_type/popup__icon-info_type_success.css');
 @import url('./blocks/popup/__icon-info/_type/popup__icon-info_type_error.css');
+@import url('./blocks/popup/__text-error/popup__text-error.css');
 /* form */
 @import url('./blocks/form/form.css');
 @import url('./blocks/form/__title/form__title.css');

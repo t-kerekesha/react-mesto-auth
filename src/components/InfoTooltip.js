@@ -1,6 +1,6 @@
 import Popup from './Popup';
 
-function InfoTooltip({ isOpen, onClose, isAuthSuccessful }) {
+function InfoTooltip({ isOpen, onClose, isAuthSuccessful, textMessage, errorMessage }) {
   return (
     <Popup isOpen={isOpen} onClose={onClose} popupClass="popup_type_form">
       <div className="popup__container">
@@ -12,13 +12,12 @@ function InfoTooltip({ isOpen, onClose, isAuthSuccessful }) {
               "popup__icon-info_type_error"
             }`} />
           <p className="popup__message">
-            {isAuthSuccessful ?
-              "Вы успешно зарегистрировались!"
-              :
-              "Что-то пошло не так! Попробуйте ещё раз."
-            }
+            {textMessage}
           </p>
         </div>
+        <p className="popup__text-error">
+          {errorMessage}
+        </p>
       </div>
     </Popup>
   );

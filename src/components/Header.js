@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 
 function Header({ user, onLogout }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -17,25 +17,27 @@ function Header({ user, onLogout }) {
         aria-label="Открыть меню" />
       <div className={`header__menu ${isMenuOpen && "header__menu_visible"}`}>
         <p className="header__user">{user?.data?.email}</p>
-        <Route path="/" exact>
-          <Link to="/signin"
-            className="header__logout link"
-            onClick={onLogout}>
-            Выйти
-          </Link>
-        </Route>
-        <Route path="/signin">
-          <Link to="/signup"
-            className="header__link link">
-            Регистрация
-          </Link>
-        </Route>
-        <Route path="/signup">
-          <Link to="/signin"
-            className="header__link link">
-            Войти
-          </Link>
-        </Route>
+        <Switch>
+          <Route path="/" exact>
+            <Link to="/signin"
+              className="header__logout link"
+              onClick={onLogout}>
+              Выйти
+            </Link>
+          </Route>
+          <Route path="/signin">
+            <Link to="/signup"
+              className="header__link link">
+              Регистрация
+            </Link>
+          </Route>
+          <Route path="/signup">
+            <Link to="/signin"
+              className="header__link link">
+              Войти
+            </Link>
+          </Route>
+        </Switch>
       </div>
     </header>
   );

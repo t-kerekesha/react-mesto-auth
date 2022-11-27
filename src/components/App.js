@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import api from '../utils/Api';
-import * as auth from '../authorization';
+import * as auth from '../utils/authorization';
 import { enableValidation, formValidators } from '../utils/FormValidator';
 import Header from './Header';
 import Main from './Main';
@@ -23,6 +23,7 @@ import { validationParams } from '../utils/constants';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isAuthSuccessful, setAuthSuccessful] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [user, setUser] = useState(null);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -49,7 +50,8 @@ function App() {
       .catch((error) => {
         setInfoTooltipOpen(true);
         setAuthSuccessful(false);
-        console.log(error);
+        setErrorMessage(error.error);
+        console.log(error.error);
       })
       .finally(() => setLoading(false));
   });
@@ -67,7 +69,8 @@ function App() {
       .catch((error) => {
         setInfoTooltipOpen(true);
         setAuthSuccessful(false);
-        // console.log(error);
+        setErrorMessage(error.message);
+        console.log(error.message);
       })
       .finally(() => setLoading(false));
   });
@@ -99,7 +102,7 @@ function App() {
 
   // Load UserInfo
   useEffect(() => {
-    if(jwt) {
+    if(loggedIn) {
       setLoading(true);
       api.getUserInfo()
         .then((dataFromServer) => {
@@ -114,7 +117,7 @@ function App() {
 
   // LoadCard
   useEffect(() => {
-    if(jwt) {
+    if(loggedIn) {
       setLoading(true);
       api.getInitialCards()
         .then((cardsFromServer) => {
@@ -133,10 +136,11 @@ function App() {
   //   console.log("formValidators", formValidators)
   // }, []);
 
-  // const validators = useMemo(() => {
-  //   enableValidation(validationParams)
-  // }, [validationParams])
-  // console.log("validators", validators);
+  // const forms = useMemo(() => {
+  //   const formList = Array.from(document.forms);
+  //   return formList;
+  // }, [document])
+  // console.log("forms", forms);
 
   // обновление данных пользователя
   function handleUpdateUser({ name, about }) {
@@ -237,6 +241,7 @@ function App() {
 
   function closeAllPopups() {
     setInfoTooltipOpen(false);
+    setErrorMessage('');
     setEditProfilePopupOpen(false);
     setAvatarPopupOpen(false);
     setAddPlacePopupOpen(false);
@@ -296,7 +301,13 @@ function App() {
       <InfoTooltip
         isOpen={isInfoTooltipOpen}
         onClose={closeAllPopups}
-        isAuthSuccessful={isAuthSuccessful} />
+        isAuthSuccessful={isAuthSuccessful}
+        textMessage={isAuthSuccessful ?
+          "Вы успешно зарегистрировались!"
+          :
+          "Что-то пошло не так! Попробуйте ещё раз."
+        }
+        errorMessage={errorMessage} />
 
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
