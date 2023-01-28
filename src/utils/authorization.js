@@ -37,7 +37,6 @@ export function checkToken(token) {
 }
 
 function checkResponse(response) {
-  console.log(response)
   if(response.ok) {
     return response.json();
   } else {
